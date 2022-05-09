@@ -1,7 +1,8 @@
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-// private test conflict
+// private test
+// private test 2
 public class MainGame extends JFrame{
 
 	public MainGame() {
