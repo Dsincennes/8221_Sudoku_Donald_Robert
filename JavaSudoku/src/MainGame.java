@@ -1,7 +1,7 @@
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-// nerdd
+// nerdd dsadasdasda
 public class MainGame extends JFrame{
 
 	public MainGame() {
