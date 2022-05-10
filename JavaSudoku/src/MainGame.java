@@ -30,14 +30,28 @@ public class MainGame extends JFrame{
 		JMenuBar menuBar = new JMenuBar();
 		
 		JMenu fileMenu = new JMenu("File");
+		JMenuItem newGame = new JMenuItem("New Game");
 		JMenuItem exitItem = new JMenuItem("Exit");
 		
 		
 		//Mnemonics
-		fileMenu.setMnemonic(KeyEvent.VK_F);
-		exitItem.setMnemonic(KeyEvent.VK_X);
+		fileMenu.setMnemonic(KeyEvent.VK_F); // File ( f )
+		exitItem.setMnemonic(KeyEvent.VK_X); // Exit ( x )
+		newGame.setMnemonic(KeyEvent.VK_N); // New Game ( n )
 		
-		// Exit... This function adds a listener that reacts to mouseclick. creates a confirm dialog to confirm exit if pressed
+		// New Game .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
+		newGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int action = JOptionPane.showConfirmDialog(MainGame.this, "Do you want to start a new game?",
+						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
+				if(action == JOptionPane.OK_OPTION) // user confirms new game
+					//TODO add new game logic
+					System.out.println("User pressed ok"); // logging
+			}
+		});
+		
+		
+		// Exit... This function adds a listener that reacts to mouse click. creates a confirm dialog to confirm exit if pressed
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int action = JOptionPane.showConfirmDialog(MainGame.this, "Do you really want to exit?",
@@ -48,6 +62,8 @@ public class MainGame extends JFrame{
 			}
 		});
 		
+		
+		fileMenu.add(newGame);
 		menuBar.add(fileMenu); // Adding File to the menu bar (makes it visible)
 		fileMenu.add(exitItem); // Adding Exit to file tab
 		
