@@ -13,8 +13,12 @@ import javax.swing.JRadioButton;
 
 public class OptionPanel extends JPanel {
 
-	private JRadioButton b1;
-	private JRadioButton b2;
+	private JRadioButton designButton;
+	private JRadioButton playButton;
+	private JButton saveButton;
+	private JButton loadButton;
+	private JButton startButton;
+	private JButton resetButton;
 	private JComboBox<String> diff;
 	private JLabel diffLabel;
 	private JLabel modeLabel;
@@ -23,15 +27,24 @@ public class OptionPanel extends JPanel {
 		setBackground(Color.LIGHT_GRAY);
 
 		Dimension dim = getPreferredSize();
-		dim.width = 200;
+		dim.width = 300;
 		setPreferredSize(dim);
 		
 		modeLabel = new JLabel("Mode");
-		b1 = new JRadioButton("design");
-		b2 = new JRadioButton("play");
+		designButton = new JRadioButton("design");
+		playButton = new JRadioButton("play");
+		saveButton = new JButton("Save Game");
+		loadButton = new JButton("Load Game");
+		startButton = new JButton("Start Game");
+		resetButton = new JButton("Reset Game");
+		
 		ButtonGroup bg = new ButtonGroup();
-		bg.add(b1);
-		bg.add(b2);
+		bg.add(designButton);
+		bg.add(playButton);
+		add(saveButton);
+		add(loadButton);
+		add(startButton);
+		add(resetButton);
 		
 		diffLabel = new JLabel("Difficulty");
 		String difficulty[]={"easy","medium","hard"};  
@@ -64,20 +77,20 @@ public class OptionPanel extends JPanel {
 		gc.gridy = 0;
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(b1, gc);
+		add(designButton, gc);
 		
 		gc.gridx = 2;
 		gc.gridy = 0;
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
-		add(b2, gc);
+		add(playButton, gc);
 		
 		//////////////////// Second Row ////////////////////
 
 		gc.gridy++;
 
 		gc.weightx = 1;
-		gc.weighty = 2.0;
+		gc.weighty = 0.1;
 
 		gc.gridx = 0;
 		gc.insets = new Insets(0, 0, 0, 5);
@@ -89,5 +102,39 @@ public class OptionPanel extends JPanel {
 		gc.insets = new Insets(0, 0, 0, 0);
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(diff, gc);
+		
+		//////////////////// Third Row ////////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 0.1;
+
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 30, 0, 5);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(saveButton, gc);
+		
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(loadButton, gc);
+		
+		//////////////////// Fourth Row ////////////////////
+
+		gc.gridy++;
+
+		gc.weightx = 1;
+		gc.weighty = 2.0;
+
+		gc.gridx = 0;
+		gc.insets = new Insets(0, 30, 0, 5);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(startButton, gc);
+		
+		gc.gridx = 1;
+		gc.insets = new Insets(0, 0, 0, 0);
+		gc.anchor = GridBagConstraints.FIRST_LINE_START;
+		add(resetButton, gc);
 	}
 }

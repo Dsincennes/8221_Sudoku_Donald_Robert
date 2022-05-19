@@ -10,8 +10,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
 	// Buttons on north toolbar
 	private JButton startButton;
-	private JButton saveButton;
-	private JButton loadButton;
+
 	private MainGame mg;
 
 	public Toolbar() {
@@ -19,8 +18,7 @@ public class Toolbar extends JPanel implements ActionListener {
 		
 		// Instantiate buttons
 		startButton = new JButton("New Game"); 
-		saveButton = new JButton("Save Game");
-		loadButton = new JButton("Load Game");
+
 		
 		startButton.addActionListener(this); // adding listener for start button
 		
@@ -28,8 +26,7 @@ public class Toolbar extends JPanel implements ActionListener {
 
 		// adding buttons to layout
 		add(startButton);
-		add(saveButton);
-		add(loadButton);
+
 	}
 
 	
