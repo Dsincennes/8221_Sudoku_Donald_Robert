@@ -37,8 +37,18 @@ public class GamePanel extends JPanel {
 			for(int j = 0; j < 9; j++) {
 				field[i] = new JFormattedTextField(puzzle[i][j]);;
 				field[i].setHorizontalAlignment(JTextField.CENTER);
-				field[i].setBackground(Color.yellow);
+				field[i].setBackground(Color.GRAY);
 				add(field[i]);
+				if(i <3 && j < 3 )
+					field[i].setBackground(Color.PINK);
+				if(i < 3 && j > 5 && j < 9)
+					field[i].setBackground(Color.PINK);
+				if(i < 6 && i > 2 && j > 2 && j < 6)
+					field[i].setBackground(Color.PINK);
+				if(i > 5 && j > 5)
+					field[i].setBackground(Color.PINK);
+				if(i > 5 && j < 3)
+					field[i].setBackground(Color.PINK);
 				
 			}
 		}
