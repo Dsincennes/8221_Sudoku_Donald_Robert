@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 
 public class MainGame extends JFrame{
 
-//	private Toolbar toolbar;
 	private GamePanel gamePanel;
 	private OptionPanel options;
 	private JFileChooser fileChooser;
@@ -22,13 +21,11 @@ public class MainGame extends JFrame{
 	public MainGame() {
 		super("Gonq Sudoku"); // title
 		
-//		toolbar = new Toolbar();
 		gamePanel = new GamePanel();
 		options = new OptionPanel();
 		fileChooser = new JFileChooser();
 		
 		setLayout(new BorderLayout());
-//		add(toolbar, BorderLayout.NORTH);
 		add(options, BorderLayout.EAST);
 		
 		setJMenuBar(createMenuBar()); // setting top menu bar
