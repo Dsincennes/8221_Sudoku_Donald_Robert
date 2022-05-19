@@ -16,13 +16,13 @@ public class GamePanel extends JPanel {
 
 	JFormattedTextField[] field = new JFormattedTextField[9];
 
-	private int[][] gameBoard; 
+	private int[][] gameBoard;
 	private int gridDim = 9; // 4x4(2x2), 9x9(3x3), 16x16(4x4), 25x25(5x5).
 
 	private int panelWidth = 550;
 
 	public GamePanel() {
-		
+
 		setBackground(Color.yellow);
 		createBoard();
 
@@ -31,7 +31,7 @@ public class GamePanel extends JPanel {
 		dim.width = panelWidth;
 		setPreferredSize(dim);
 
-		for (int col = 0; col < gridDim; col++) 
+		for (int col = 0; col < gridDim; col++)
 			for (int row = 0; row < gridDim; row++) {
 				field[col] = new JFormattedTextField(gameBoard[col][row]);
 				;
@@ -41,7 +41,7 @@ public class GamePanel extends JPanel {
 								? Color.PINK
 								: Color.GRAY);
 				field[col].setFont(new Font("Some-Font-Name", Font.BOLD, 16)); // Makes it easier to read with the pink and grey background
-																				
+
 				add(field[col]);
 				/*
 				 * // solved puzzle for testing int[][] puzzle = { { 8, 2, 7, 1, 5, 4, 3, 9, 6
@@ -72,7 +72,7 @@ public class GamePanel extends JPanel {
 
 	/**
 	 * Method: generateSolution
-	 * 
+	 *
 	 * Recursively generates a randomly created Sudoku game, based on the pivot point or cluster range.
 	 *
 	 * @param 			Board Game to populate, it will call itself to subsequently add more items.
@@ -121,7 +121,7 @@ public class GamePanel extends JPanel {
 	 */
 	public int getNextNumb(int[][] board, int x_axis, int y_axis, List<Integer> numList) {
 		while (numList.size() > 0) {
-			int number = numList.remove(0); 
+			int number = numList.remove(0);
 			if (isPossibleX(board, y_axis, number) && isPossibleY(board, x_axis, number) && isPossibleBlock(board, x_axis, y_axis, number))
 				return number;
 		}
@@ -138,7 +138,7 @@ public class GamePanel extends JPanel {
 	 * @param number     Current number to look for.
 	 * @return boolean Returns a true of false statement if the block is presently
 	 *         able to accommodate the number.
-	 * 
+	 *
 	 *         TODO Add modifier to pivot based on changed 3x3 6x6 etc.
 	 */
 	public boolean isPossibleBlock(int[][] boardState, int x_axis, int y_axis, int current_num) {
