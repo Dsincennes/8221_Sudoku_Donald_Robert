@@ -14,25 +14,31 @@ import javax.swing.JOptionPane;
 
 public class MainGame extends JFrame{
 
+//	private Toolbar toolbar;
 	private GamePanel gamePanel;
 	private OptionPanel options;
 	private JFileChooser fileChooser;
+	private GameSplash splash;
 	
 	public MainGame() {
 		super("Gonq Sudoku"); // title
 		
+//		toolbar = new Toolbar();
 		gamePanel = new GamePanel();
 		options = new OptionPanel();
 		fileChooser = new JFileChooser();
 		
 		setLayout(new BorderLayout());
+//		add(toolbar, BorderLayout.NORTH);
 		add(options, BorderLayout.EAST);
 		
 		setJMenuBar(createMenuBar()); // setting top menu bar
 		setSize(800, 600); // sets default open size
 		setMinimumSize(new Dimension(500, 400)); // minimum size user can use
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops process when user quits
+		setLocationRelativeTo(null);// Setting location to the center of screen
 		setVisible(true); // shows application
+		splash = new GameSplash();
 	}
 	
 	//Top Menu Bar
