@@ -19,10 +19,10 @@ import javax.swing.JTextField;
  */
 public class GamePanel extends JPanel {
 
-	JFormattedTextField[] field = new JFormattedTextField[9];
-
 	private int[][] gameBoard;
-	private int gridDim = 9; // 4x4(2x2), 9x9(3x3), 16x16(4x4), 25x25(5x5).
+	private int gridDim = 4; // 4x4(2x2), 9x9(3x3), 16x16(4x4), 25x25(5x5).
+
+	JFormattedTextField[] field = new JFormattedTextField[gridDim];
 
 	private int panelWidth = 550;
 
@@ -32,6 +32,8 @@ public class GamePanel extends JPanel {
 	public GamePanel() {
 
 		setBackground(Color.yellow);
+
+		// gameBoard = new int[gridDim][gridDim];
 		createBoard();
 
 		setLayout(new GridLayout(gridDim, gridDim));
@@ -39,18 +41,37 @@ public class GamePanel extends JPanel {
 		dim.width = panelWidth;
 		setPreferredSize(dim);
 
-		for (int col = 0; col < gridDim; col++)
-			for (int row = 0; row < gridDim; row++) {
-				field[col] = new JFormattedTextField(gameBoard[col][row]);
-				;
-				field[col].setHorizontalAlignment(JTextField.CENTER);
-				field[col].setBackground(((col < 3 && row < 3) || (col < 3 && row > 5 && row < 9)
-						|| (col < 6 && col > 2 && row > 2 && row < 6) || (col > 5 && row > 5) || (col > 5 && row < 3))
-								? Color.PINK
-								: Color.GRAY);
-				field[col].setFont(new Font("Some-Font-Name", Font.BOLD, 16)); // Makes it easier to read with the pink and grey background
+		for (int row = 0; row < gridDim; row++)
+			for (int col = 0; col < gridDim; col++) {
+				field[row] = new JFormattedTextField(gameBoard[row][col]);
 
-				add(field[col]);
+				field[row].setHorizontalAlignment(JTextField.CENTER);
+				switch (gridDim) {
+				case 4:
+					field[row].setBackground(
+							((col <= 1 && row <= 1) || ((col > 1 && row > 1))) ? Color.PINK : Color.GRAY);
+					break;
+				case 9:
+					field[row].setBackground(((row < 3 && col < 3) || (row < 3 && col > 5 && col < 9)
+							|| (row < 6 && row > 2 && col > 2 && col < 6) || (row > 5 && col > 5)
+							|| (row > 5 && col < 3)) ? Color.PINK : Color.GRAY);
+					break;
+				case 16:
+					
+					field[row].setBackground(((row <= 3 && col <= 3) || (row <= 3 && col > 7 && col < 12)
+							|| (row > 3 && row < 8 && col >= 4 && col <= 7) || (row > 3 && row < 8 && col >= 12)
+							|| (row > 7 && row < 12  && col <= 3) || (row > 7 && row < 12 && col > 7 && col < 12)
+							|| (row > 11 && col >= 4 && col <= 7 ) ||  (row > 11 && col > 7 && col >= 12)) ? Color.PINK : Color.GRAY);
+
+					break;
+				case 25:
+					break;
+				}
+
+				field[row].setFont(new Font("Some-Font-Name", Font.BOLD, 16)); // Makes it easier to read with the pink
+																				// and grey background
+
+				add(field[row]);
 				/*
 				 * // solved puzzle for testing int[][] puzzle = { { 8, 2, 7, 1, 5, 4, 3, 9, 6
 				 * }, { 9, 6, 5, 3, 2, 7, 1, 4, 8 }, { 3, 4, 1, 6, 8, 9, 7, 5, 2 }, { 5, 9, 3,
@@ -60,8 +81,8 @@ public class GamePanel extends JPanel {
 				 */
 
 				/*
-				 * TODO, Figure out a more concise version for odds and evens, so we can do this at different sizes.
-				 * Just saving space and condensing it. if(i <3 && j < 3 )
+				 * TODO, Figure out a more concise version for odds and evens, so we can do this
+				 * at different sizes. Just saving space and condensing it. if(i <3 && j < 3 )
 				 * field[i].setBackground(Color.PINK); if(i < 3 && j > 5 && j < 9)
 				 * field[i].setBackground(Color.PINK); if(i < 6 && i > 2 && j > 2 && j < 6)
 				 * field[i].setBackground(Color.PINK); if(i > 5 && j > 5)
@@ -81,11 +102,14 @@ public class GamePanel extends JPanel {
 	/**
 	 * Method: generateSolution
 	 *
-	 * Recursively generates a randomly created Sudoku game, based on the pivot point or cluster range.
+	 * Recursively generates a randomly created Sudoku game, based on the pivot
+	 * point or cluster range.
 	 *
-	 * @param 			Board Game to populate, it will call itself to subsequently add more items.
-	 * @param 			Index The current index being worked on, initially set to zero for the starting point.
-	 * @return int[][] 	Will return the completed version of the board.
+	 * @param Board Game to populate, it will call itself to subsequently add more
+	 *              items.
+	 * @param Index The current index being worked on, initially set to zero for the
+	 *              starting point.
+	 * @return int[][] Will return the completed version of the board.
 	 */
 	public int[][] generateSolution(int[][] board, int index) {
 		if (index > (Math.pow(gridDim, 2) - 1)) // Returns the game when it is populated
@@ -118,19 +142,22 @@ public class GamePanel extends JPanel {
 	}
 
 	/**
-	 * Method: getNextNum
-	 * Checks to see if it is a valid number in which to place into the present index, if so it will return the number, else it will return -1.
-	 * It slowly reduces the list from the prior method via call by reference.
-	 * @param board   	   Board to check.
-	 * @param x_axis       X position in game.
-	 * @param y_axis       Y position in game.
-	 * @param numList      List of remaining numbers.
-	 * @return int		   Returns the next possible number, if it is not valid it will return -1.
+	 * Method: getNextNum Checks to see if it is a valid number in which to place
+	 * into the present index, if so it will return the number, else it will return
+	 * -1. It slowly reduces the list from the prior method via call by reference.
+	 * 
+	 * @param board   Board to check.
+	 * @param x_axis  X position in game.
+	 * @param y_axis  Y position in game.
+	 * @param numList List of remaining numbers.
+	 * @return int Returns the next possible number, if it is not valid it will
+	 *         return -1.
 	 */
 	public int getNextNumb(int[][] board, int x_axis, int y_axis, List<Integer> numList) {
 		while (numList.size() > 0) {
 			int number = numList.remove(0);
-			if (isPossibleX(board, y_axis, number) && isPossibleY(board, x_axis, number) && isPossibleBlock(board, x_axis, y_axis, number))
+			if (isPossibleX(board, y_axis, number) && isPossibleY(board, x_axis, number)
+					&& isPossibleBlock(board, x_axis, y_axis, number))
 				return number;
 		}
 		return -1;
@@ -157,10 +184,13 @@ public class GamePanel extends JPanel {
 		int horCluster = 0;
 		int vertCluster = 0;
 
-		if (gridDim % 3 == 0) { // This will need to be adjusted for each additional jump in 4x4 9x9 16x16
-								// 25x25, because there will need to be additional &&'s to adjust for
-			// 1.5 being 2/3's of the cluster IE 6/9
-			// 3 being a third of the cluster 3/9
+		// This will need to be adjusted for each additional jump in 4x4 9x9 16x16
+		// 25x25, because there will need to be additional &&'s to adjust for
+		// 1.5 being 2/3's of the cluster IE 6/9
+		// 3 being a third of the cluster 3/9
+		switch (gridDim) {
+		case 4:
+		case 9:
 			if (x_axis < (gridDim / 1.5) && x_axis >= (gridDim / 3))
 				horCluster = (gridDim / 3);
 			else if (x_axis >= (gridDim / 1.5))
@@ -170,19 +200,17 @@ public class GamePanel extends JPanel {
 				vertCluster = (gridDim / 3);
 			else if (y_axis >= (gridDim / 1.5))
 				vertCluster = (int) (gridDim / 1.5);
-
-		} else {
-
-			if (x_axis < 4 && x_axis >= 2)
-				horCluster = 2;
-
-			if (y_axis < 4 && y_axis >= 2)
-				vertCluster = 2;
+			break;
+		case 16:
+			
+			horCluster = (x_axis < 3) ? 0: (x_axis > 3 && x_axis < 8) ? 4: (x_axis > 8 && x_axis <  12)? 8: 12;    
+			vertCluster = (y_axis < 3) ? 0: (y_axis > 3 && y_axis < 8) ? 4: (y_axis > 8 && y_axis <  12)? 8: 12;   	
+			break;
 
 		}
 
-		for (int col = vertCluster; col < vertCluster + (gridDim / 3); col++) {
-			for (int row = horCluster; row < horCluster + (gridDim / 3); row++) {
+		for (int col = vertCluster; col < vertCluster ; col++) {
+			for (int row = horCluster; row < horCluster ; row++) {
 				if (boardState[col][row] == current_num) // TODO Convert this to take chars Though it should not be hard
 					return false;
 			}
