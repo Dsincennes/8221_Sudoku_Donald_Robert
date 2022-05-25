@@ -12,6 +12,11 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Class holds the rules for generating a sudoku puzzle
+ * @author Donald Sincennes & Robert Jackson
+ *
+ */
 public class GamePanel extends JPanel {
 
 	JFormattedTextField[] field = new JFormattedTextField[9];
@@ -21,6 +26,9 @@ public class GamePanel extends JPanel {
 
 	private int panelWidth = 550;
 
+	/**
+	 * Creates a grid
+	 */
 	public GamePanel() {
 
 		setBackground(Color.yellow);
@@ -220,6 +228,11 @@ public class GamePanel extends JPanel {
 		return true;
 	}
 
+	/**
+	 * SaveFile
+	 * @param file file to be saved
+	 * @throws IOException incase cannot save
+	 */
 	public void saveToFile(File file) throws IOException {
 
 	}
