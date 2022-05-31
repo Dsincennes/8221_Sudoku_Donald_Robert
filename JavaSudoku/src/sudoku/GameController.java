@@ -35,10 +35,9 @@ public class GameController extends JFrame{
 	public GameController() {
 		super("Donald Sincennes & Robert Jackson Sudoku"); // title
 		
-		SudokuPanel.gridDim = 9;
 		gamePanel = new SudokuPanel(9);
 		options = new OptionPanel();
-		options2 = new NumberInputPanel();
+		options2 = new NumberInputPanel(9);
 		fileChooser = new JFileChooser();
 		
 		setLayout(new BorderLayout());
@@ -65,6 +64,7 @@ public class GameController extends JFrame{
 		JMenu newGame = new JMenu("New Game");
 		JMenu design = new JMenu("Design");
 		JMenuItem two = new JMenuItem("2X2");
+		JMenuItem three = new JMenuItem("3X3");
 		JMenuItem play = new JMenuItem("Play");
 		JMenuItem saveGame = new JMenuItem("Save Game");
 		JMenuItem loadGame = new JMenuItem("Load Game");
@@ -103,12 +103,25 @@ public class GameController extends JFrame{
 				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Design a new 2x2 game?",
 						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
 				if(action == JOptionPane.OK_OPTION) { // user confirms new game
-					SudokuPanel.gridDim = 4;
 					newGame(4);
 					OptionPanel.appendText("two");
 				}
 				else
 					OptionPanel.appendText("Cancel two");
+			}
+		});
+		
+		// Design .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
+		three.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Design a new 2x2 game?",
+						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
+				if(action == JOptionPane.OK_OPTION) { // user confirms new game
+					newGame(9);
+					OptionPanel.appendText("three");
+				}
+				else
+					OptionPanel.appendText("Cancel three");
 			}
 		});
 		
@@ -175,6 +188,7 @@ public class GameController extends JFrame{
 		newGame.add(design);
 		newGame.add(play);
 		design.add(two);
+		design.add(three);
 		
 		//Mnemonics
 		fileMenu.setMnemonic(KeyEvent.VK_F); // File ( f )
@@ -192,10 +206,12 @@ public class GameController extends JFrame{
 	 * New game function. starts a new game in the application
 	 */
 	public void newGame(int dim) {
-        if(gamePanel != null)
-        	this.remove(gamePanel);
+        this.remove(gamePanel);
+        this.remove(options2);
         gamePanel = new SudokuPanel(dim);
+        options2 = new NumberInputPanel(dim);
         add(gamePanel, BorderLayout.CENTER);
+        add(options2, BorderLayout.SOUTH);
         revalidate();
         repaint();
 	}

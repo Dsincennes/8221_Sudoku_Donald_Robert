@@ -18,7 +18,7 @@ public class NumberInputPanel extends JPanel{
 	private ButtonGroup bg;
 	private JPanel pnlNumbers;
 	
-	public NumberInputPanel() {
+	public NumberInputPanel(int num) {
         super(new BorderLayout());
         JPanel pnlAlign = new JPanel();
         pnlAlign.setLayout(new BoxLayout(pnlAlign, BoxLayout.PAGE_AXIS));
@@ -41,7 +41,7 @@ public class NumberInputPanel extends JPanel{
 		JPanel pnlNumbersNumbers = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		pnlNumbers.add(pnlNumbersNumbers);
 		
-		for(int i = 0; i < SudokuPanel.gridDim; i++) {
+		for(int i = 1; i <= num; i++) {
 			if(i + 48 > 57)
 				inputs[i] = new JToggleButton("" + ((char)(i + 55)));	
 			else

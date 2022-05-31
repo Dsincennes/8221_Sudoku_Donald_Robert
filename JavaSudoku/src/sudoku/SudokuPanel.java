@@ -23,7 +23,7 @@ import javax.swing.SwingConstants;
 public class SudokuPanel extends JPanel {
 
 	private int[][] gameBoard;
-	public static char gridDim; // 4x4(2x2), 9x9(3x3), 16x16(4x4), 25x25(5x5).
+	public static char gridDim = 9; // 4x4(2x2), 9x9(3x3), 16x16(4x4), 25x25(5x5).
 	private JLabel[][] grid = new JLabel[gridDim][gridDim];
 
 
