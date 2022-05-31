@@ -51,7 +51,7 @@ public class GameController extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops process when user quits
 		setLocationRelativeTo(null);// Setting location to the center of screen
 		setVisible(true); // shows application
-		splash = new GameSplash(); // shows splash
+		//splash = new GameSplash(); // shows splash
 	}
 	
 	/**
@@ -206,9 +206,13 @@ public class GameController extends JFrame{
 	 * New game function. starts a new game in the application
 	 */
 	public void newGame(int dim) {
+		if(gamePanel != null)
         this.remove(gamePanel);
-        this.remove(options2);
+        
         gamePanel = new SudokuPanel(dim);
+		
+        this.remove(options2);
+        
         options2 = new NumberInputPanel(dim);
         add(gamePanel, BorderLayout.CENTER);
         add(options2, BorderLayout.SOUTH);
