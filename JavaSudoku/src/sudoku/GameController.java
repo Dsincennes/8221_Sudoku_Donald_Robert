@@ -1,6 +1,5 @@
 package sudoku;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -46,12 +45,11 @@ public class GameController extends JFrame{
 		add(options2, BorderLayout.SOUTH);
 		setJMenuBar(createMenuBar()); // setting top menu bar
 		setSize(800, 600); // sets default open size
-//		setMinimumSize(new Dimension(550, 400)); // minimum size user can use
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops process when user quits
 		setLocationRelativeTo(null);// Setting location to the center of screen
 		setVisible(true); // shows application
-		//splash = new GameSplash(); // shows splash
+		splash = new GameSplash(); // shows splash
 	}
 	
 	/**
@@ -84,30 +82,16 @@ public class GameController extends JFrame{
 		});
 		
 		// Design .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
-		design.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Design a new game?",
-						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
-				if(action == JOptionPane.OK_OPTION) { // user confirms new game
-					newGame(9);
-					OptionPanel.appendText("Design");
-				}
-				else
-					OptionPanel.appendText("Cancel Des");
-			}
-		});
-		
-		// Design .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
 		two.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Design a new 2x2 game?",
 						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
 				if(action == JOptionPane.OK_OPTION) { // user confirms new game
 					newGame(4);
-					OptionPanel.appendText("two");
+					OptionPanel.appendText("Design new 2x2");
 				}
 				else
-					OptionPanel.appendText("Cancel two");
+					OptionPanel.appendText("Cancel 2x2");
 			}
 		});
 		
@@ -130,9 +114,10 @@ public class GameController extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to clear puzzle","confirm clear", JOptionPane.OK_CANCEL_OPTION);
 				if(action == JOptionPane.OK_OPTION) {
-					gamePanel.clear();
-					revalidate();
-					repaint();
+//					newGame(4);
+//					revalidate();
+//					repaint();
+					//TODO add logic
 					OptionPanel.appendText("Cleared");
 				}
 				else
@@ -207,15 +192,15 @@ public class GameController extends JFrame{
 	 */
 	public void newGame(int dim) {
 		if(gamePanel != null)
-        this.remove(gamePanel);
-        
+			this.remove(gamePanel);  
         gamePanel = new SudokuPanel(dim);
 		
         this.remove(options2);
-        
         options2 = new NumberInputPanel(dim);
+        
         add(gamePanel, BorderLayout.CENTER);
         add(options2, BorderLayout.SOUTH);
+        
         revalidate();
         repaint();
 	}

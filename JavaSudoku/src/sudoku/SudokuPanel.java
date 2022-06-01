@@ -10,10 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 /**
  * Class holds the rules for generating a sudoku puzzle
@@ -23,9 +21,8 @@ import javax.swing.SwingConstants;
 public class SudokuPanel extends JPanel {
 
 	private int[][] gameBoard;
-	public  int gridDim = 9; // 4x4(2x2), 9x9(3x3), 16x16(4x4), 25x25(5x5).
+	public  int gridDim = 9; // 4x4(2x2), 9x9(3x3), 16x16(4x4)
 	private JLabel[][] grid = new JLabel[gridDim][gridDim];
-
 
 	/**
 	 * Creates a grid
@@ -240,9 +237,6 @@ public class SudokuPanel extends JPanel {
 				return false;
 
 		return true;
-	}
-
-	public void clear() {	
 	}
 	
 	/**

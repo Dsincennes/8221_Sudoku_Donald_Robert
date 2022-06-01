@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -47,6 +49,12 @@ public class NumberInputPanel extends JPanel{
 			else
 			inputs[i] = new JToggleButton("" + ((char)(i + 48)));
 			inputs[i].setPreferredSize(new Dimension(50,50));
+			inputs[i].addActionListener(new ActionListener() {			
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					OptionPanel.appendText("User clicked " + e.getActionCommand());
+				}
+			});
 			bg.add(inputs[i]);
 			pnlNumbersNumbers.add(inputs[i]);
 		}
