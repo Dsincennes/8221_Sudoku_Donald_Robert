@@ -3,8 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,6 +17,7 @@ public class NumberInputPanel extends JPanel{
 	private JToggleButton[] inputs;
 	private ButtonGroup bg;
 	private JPanel pnlNumbers;
+	static char currentSelection;
 	
 	public NumberInputPanel(int num) {
         super(new BorderLayout());
@@ -27,9 +26,10 @@ public class NumberInputPanel extends JPanel{
         add(pnlAlign, BorderLayout.NORTH);
         
 		setBackground(Color.LIGHT_GRAY);
-
+		currentSelection = ' ';
 		Dimension dim = getPreferredSize();
 		dim.height = 85;
+		
 		setPreferredSize(dim);
 		
 		inputs = new JToggleButton[16];
@@ -49,14 +49,16 @@ public class NumberInputPanel extends JPanel{
 			else
 			inputs[i] = new JToggleButton("" + ((char)(i + 48)));
 			inputs[i].setPreferredSize(new Dimension(50,50));
-			inputs[i].addActionListener(new ActionListener() {			
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					OptionPanel.appendText("User clicked " + e.getActionCommand());
-				}
-			});
+			inputs[i].addActionListener(e ->{
+				currentSelection = e.getActionCommand().charAt(0);
+				OptionPanel.appendText("User Clicked: " + e.getActionCommand());
+			});;
 			bg.add(inputs[i]);
 			pnlNumbersNumbers.add(inputs[i]);
 		}
+	}
+	
+	public char getNumberSelected() {
+		return currentSelection;
 	}
 }

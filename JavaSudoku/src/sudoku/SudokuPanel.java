@@ -22,12 +22,12 @@ public class SudokuPanel extends JPanel {
 
 	private int[][] gameBoard;
 	public  int gridDim = 9; // 4x4(2x2), 9x9(3x3), 16x16(4x4)
-	private JLabel[][] grid = new JLabel[gridDim][gridDim];
+	private JLabel[][] grid = new SudokuGridLabel[gridDim][gridDim];
 
 	/**
 	 * Creates a grid
 	 */
-	public SudokuPanel(int gridDim) {
+	public SudokuPanel(int gridDim, boolean play) {
 
 		
 		this.gridDim = gridDim;
@@ -37,7 +37,7 @@ public class SudokuPanel extends JPanel {
 		
 		for (int row = 0; row < gridDim; row++) {
 			for (int col = 0; col < gridDim; col++) {
-				grid[row][col] = new JLabel("", 0);
+				grid[row][col] = new SudokuGridLabel("", 0, row, col, '0');
 				grid[row][col].setFont(new Font(Font.SANS_SERIF, Font.BOLD, 26));
 				grid[row][col].setOpaque(true);
 				grid[row][col].setBackground(Color.WHITE);
@@ -62,7 +62,7 @@ public class SudokuPanel extends JPanel {
 				}
 			}
 		}
-		createBoard();
+		createBoard(play);
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
 	}
@@ -70,15 +70,18 @@ public class SudokuPanel extends JPanel {
 	/**
 	 * Method: createBoard Populates the game board.
 	 */
-	public void createBoard() {
-		gameBoard = generateSolution(new int[gridDim][gridDim], 0);
-		
-		
-		for (int col = 0; col < gridDim ; col++) {
-            for (int row = 0; row < gridDim ; row++) {
-            	grid[row][col].setText(String.valueOf((char) (gameBoard[row][col] + 48)));
-            }
-        }
+	public void createBoard(boolean play) {
+		if (!play) {
+			gameBoard = new int[gridDim][gridDim];
+		} else {
+			gameBoard = generateSolution(new int[gridDim][gridDim], 0);
+
+			for (int col = 0; col < gridDim; col++) {
+				for (int row = 0; row < gridDim; row++) {
+					grid[row][col].setText(String.valueOf((char) (gameBoard[row][col] + 48)));
+				}
+			}
+		}
 	}
 
 	/**

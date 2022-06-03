@@ -1,0 +1,44 @@
+package sudoku;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JLabel;
+
+public class SudokuGridLabel extends JLabel {
+
+	int row;
+	int col;
+	char value;
+	
+
+public SudokuGridLabel(String string, int i, int row, int col, char value) {
+	
+	super(string, i);
+	
+	this.row = row;
+	this.col = col;
+	this.value = value;
+	
+    addMouseListener(new MouseAdapter() {
+        public void mousePressed(MouseEvent me) {
+          fireActionPerformed(new ActionEvent(SudokuGridLabel.this, ActionEvent.ACTION_PERFORMED, ""));
+        }
+      });
+}
+
+  protected void fireActionPerformed(ActionEvent ae) {
+
+	OptionPanel.appendText("Set: " + String.valueOf(NumberInputPanel.currentSelection) + " Grid: [" + row + "," + col + "]");
+    this.setText(String.valueOf(NumberInputPanel.currentSelection));
+    
+  }
+  
+  public void setValue(int i) {
+	  this.value = (char) i;
+  }
+  public char getValue() {
+	  return this.value;
+  }
+}

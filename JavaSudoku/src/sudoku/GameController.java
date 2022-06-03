@@ -34,7 +34,7 @@ public class GameController extends JFrame{
 	public GameController() {
 		super("Donald Sincennes & Robert Jackson Sudoku"); // title
 		
-		gamePanel = new SudokuPanel(9);
+		gamePanel = new SudokuPanel(9, false);
 		options = new OptionPanel();
 		options2 = new NumberInputPanel(9);
 		fileChooser = new JFileChooser();
@@ -49,7 +49,7 @@ public class GameController extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops process when user quits
 		setLocationRelativeTo(null);// Setting location to the center of screen
 		setVisible(true); // shows application
-		splash = new GameSplash(); // shows splash
+//		splash = new GameSplash(); // shows splash
 	}
 	
 	/**
@@ -61,51 +61,65 @@ public class GameController extends JFrame{
 		JMenu fileMenu = new JMenu("File");
 		JMenu newGame = new JMenu("New Game");
 		JMenu design = new JMenu("Design");
-		JMenuItem two = new JMenuItem("2X2");
-		JMenuItem three = new JMenuItem("3X3");
-		JMenuItem play = new JMenuItem("Play");
+		JMenu play = new JMenu("Play");
+		JMenuItem designTwo = new JMenuItem("Design 2x2");
+		JMenuItem designThree = new JMenuItem("Design 3x3");
+		JMenuItem playTwo = new JMenuItem("Play 2x2");
+		JMenuItem playThree = new JMenuItem("Play 3x3");
 		JMenuItem saveGame = new JMenuItem("Save Game");
 		JMenuItem loadGame = new JMenuItem("Load Game");
 		JMenuItem exitItem = new JMenuItem("Exit");
 		JMenuItem clear = new JMenuItem("Clear");
 		
 		// Play .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
-		play.addActionListener(e -> {
-				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Play a new game?",
+		playTwo.addActionListener(e -> {
+				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Play a new 2x2 Game?",
 						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
 				if(action == JOptionPane.OK_OPTION) { // user confirms new game
-					newGame(9);
-					OptionPanel.appendText("New Game");
+					newGame(4, true);
+					OptionPanel.appendText("Play 2x2");
 				}
 				else
-					OptionPanel.appendText("Cancel New");
+					OptionPanel.appendText("Cancel Play 2x2");
+		});
+		
+		// Play .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
+		playThree.addActionListener(e -> {
+			int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Play a new 3x3 game?",
+					"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
+			if(action == JOptionPane.OK_OPTION) { // user confirms new game
+				newGame(9, true);
+				OptionPanel.appendText("Play 3x3");
+			}
+			else
+				OptionPanel.appendText("Cancel Play 3x3");
 		});
 		
 		// Design .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
-		two.addActionListener(new ActionListener() {
+		designTwo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Design a new 2x2 game?",
 						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
 				if(action == JOptionPane.OK_OPTION) { // user confirms new game
-					newGame(4);
-					OptionPanel.appendText("Design new 2x2");
+					newGame(4, false);
+					OptionPanel.appendText("Design 2x2");
 				}
 				else
-					OptionPanel.appendText("Cancel 2x2");
+					OptionPanel.appendText("Cancel Design 2x2");
 			}
 		});
 		
 		// Design .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
-		three.addActionListener(new ActionListener() {
+		designThree.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Design a new 2x2 game?",
+				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Design a new 3x3 game?",
 						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
 				if(action == JOptionPane.OK_OPTION) { // user confirms new game
-					newGame(9);
-					OptionPanel.appendText("three");
+					newGame(9, false);
+					OptionPanel.appendText("Design 3x3");
 				}
 				else
-					OptionPanel.appendText("Cancel three");
+					OptionPanel.appendText("Cancel design 3x3");
 			}
 		});
 		
@@ -172,8 +186,10 @@ public class GameController extends JFrame{
 		fileMenu.add(clear);
 		newGame.add(design);
 		newGame.add(play);
-		design.add(two);
-		design.add(three);
+		play.add(playTwo);
+		play.add(playThree);
+		design.add(designTwo);
+		design.add(designThree);
 		
 		//Mnemonics
 		fileMenu.setMnemonic(KeyEvent.VK_F); // File ( f )
@@ -190,10 +206,10 @@ public class GameController extends JFrame{
 	/**
 	 * New game function. starts a new game in the application
 	 */
-	public void newGame(int dim) {
+	public void newGame(int dim, boolean play) {
 		if(gamePanel != null)
 			this.remove(gamePanel);  
-        gamePanel = new SudokuPanel(dim);
+        gamePanel = new SudokuPanel(dim, play);
 		
         this.remove(options2);
         options2 = new NumberInputPanel(dim);
