@@ -1,8 +1,11 @@
 package sudoku;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,6 +44,12 @@ public class SudokuPanel extends JPanel {
 				grid[row][col].setFont(new Font(Font.SANS_SERIF, Font.BOLD, 26));
 				grid[row][col].setOpaque(true);
 				grid[row][col].setBackground(Color.WHITE);
+				grid[row][col].addMouseListener(new MouseAdapter() {
+					public void mouseClicked(MouseEvent me) {
+						validMove(me.getComponent());
+					}
+					
+				});
 				panel.add(grid[row][col]);
 				
 				switch (gridDim) {
@@ -65,6 +74,22 @@ public class SudokuPanel extends JPanel {
 		createBoard(play);
         setLayout(new BorderLayout());
         add(panel, BorderLayout.CENTER);
+	}
+
+	protected void validMove(Component component) {
+		SudokuGridLabel test = (SudokuGridLabel) component;
+		int selectedNum = NumberInputPanel.currentSelection - 48;
+		int y = ((SudokuGridLabel) component).getCol();
+		int x = ((SudokuGridLabel) component).getRow();
+		
+		if(isPossibleX(gameBoard, y, selectedNum) && isPossibleY(gameBoard, x, selectedNum)
+					&& isPossibleBlock(gameBoard, x, y, selectedNum)) {
+			test.setText(String.valueOf(selectedNum));
+			System.out.println("TRUE");
+		}
+		else
+			System.out.println("False");
+		
 	}
 
 	/**
