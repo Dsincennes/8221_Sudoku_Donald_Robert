@@ -21,11 +21,11 @@ public SudokuGridLabel(String string, int i, int row, int col, char value) {
 	this.col = col;
 	this.value = value;
 	
-    addMouseListener(new MouseAdapter() {
-        public void mousePressed(MouseEvent me) {
-          fireActionPerformed(new ActionEvent(SudokuGridLabel.this, ActionEvent.ACTION_PERFORMED, ""));
-        }
-      });
+	/*
+	 * addMouseListener(new MouseAdapter() { public void mousePressed(MouseEvent me)
+	 * { fireActionPerformed(new ActionEvent(SudokuGridLabel.this,
+	 * ActionEvent.ACTION_PERFORMED, "")); } });
+	 */
 }
 
   protected void fireActionPerformed(ActionEvent ae) {
@@ -49,4 +49,20 @@ public SudokuGridLabel(String string, int i, int row, int col, char value) {
   public char getValue() {
 	  return this.value;
   }
+
+public int getRow() {
+	return row;
+}
+
+public void setRow(int row) {
+	this.row = row;
+}
+
+public int getCol() {
+	return col;
+}
+
+public void setCol(int col) {
+	this.col = col;
+}
 }
