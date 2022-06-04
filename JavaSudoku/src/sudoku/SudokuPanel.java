@@ -84,6 +84,7 @@ public class SudokuPanel extends JPanel {
 		
 		if(isPossibleX(gameBoard, y, selectedNum) && isPossibleY(gameBoard, x, selectedNum)
 					&& isPossibleBlock(gameBoard, x, y, selectedNum)) {
+			gameBoard[x][y] = selectedNum;
 			test.setText(String.valueOf(selectedNum));
 			System.out.println("TRUE");
 		}
