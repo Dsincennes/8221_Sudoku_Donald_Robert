@@ -31,8 +31,16 @@ public SudokuGridLabel(String string, int i, int row, int col, char value) {
   protected void fireActionPerformed(ActionEvent ae) {
 
 	OptionPanel.appendText("Set: " + String.valueOf(NumberInputPanel.currentSelection) + " Grid: [" + row + "," + col + "]");
+	
+	// 			if (isPossibleX(board, y_axis, number) && isPossibleY(board, x_axis, number)
+	//&& isPossibleBlock(board, x_axis, y_axis, number))
+	
     this.setText(String.valueOf(NumberInputPanel.currentSelection));
-    
+//    else
+//    	this.setText("");
+
+   
+   
   }
   
   public void setValue(int i) {
