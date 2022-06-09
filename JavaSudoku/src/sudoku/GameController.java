@@ -21,12 +21,12 @@ import javax.swing.SwingUtilities;
  * 
  * File Name: GameController.java 
  * Assessment: Assignment 1.2
- * Student Name:  Donald Sincennes & Robert Jackson 
+ * Student Name:  Donald Sincennes and Robert Jackson 
  * Student Number: 041011305 & 040627795
  * Course: CST8221 - Java Application Programming
  * 
  * @JavaVersion v13
- * @author Donald Sincennes & Robert Jackson
+ * @author Donald Sincennes and Robert Jackson
  * @version 0.1
  */
 
@@ -35,15 +35,27 @@ import javax.swing.SwingUtilities;
  * Class GameController
  * Purpose: To contain the main frame, and acts as a controller though the majority of the game.
  * 
- * @author Donald Sincennes & Robert Jackson
+ * @author Donald Sincennes and Robert Jackson
  * @version 0.1
  *
  */
 public class GameController extends JFrame {
 
+	/**
+	 * Root Frame
+	 */
 	private SudokuPanel gamePanel;
+	/**
+	 * options Object, buttons, difficulty, textarea
+	 */
 	private OptionPanel options;
+	/**
+	 * Future use, Save function
+	 */
 	private JFileChooser fileChooser;
+	/**
+	 * Buttons for input
+	 */
 	private NumberInputPanel inputChoices;
 
 	/**
@@ -75,7 +87,7 @@ public class GameController extends JFrame {
 	 * Method name: createMenuBar.
 	 * Purpose: To create a menu bar for the frame to use.
 	 * 
-	 * @author Donald Sincennes & Robert Jackson
+	 * @author Donald Sincennes and Robert Jackson
 	 * @return JMenuBar, Returns the created menu bar.
 	 * @version 0.1
 	 */
@@ -249,7 +261,7 @@ public class GameController extends JFrame {
 	 * Purpose: To start a new game within the Sudoku game pane.
 	 * @param dim of type int, used to set the dimensions of the grid being made.
 	 * @param play of type boolean, used to set the flag for type of game state being made.
-	 * @author Donald Sincennes & Robert Jackson
+	 * @author Donald Sincennes and Robert Jackson
 	 * @version 0.1
 	 */
 	private void newGame(int dim, boolean play) {
@@ -277,16 +289,24 @@ public class GameController extends JFrame {
 	 * Class: GameSplash
 	 * Purpose: An inner class that launches a new frame with a panel at the beginning of the game, duration five secounds.
 	 * 
-	 * @author Donald Sincennes & Robert Jackson
+	 * @author Donald Sincennes and Robert Jackson
 	 * @version 0.1
 	 *
 	 */
 	private class GameSplash{
 
+		/**
+		 * frame of splash screen
+		 */
 		JFrame frame;
+		/**
+		 * image for splash
+		 */
 		JLabel image = new JLabel(new ImageIcon("sudoku.png"));
 
-		// Default constructor, sets up panel attributes.
+		/**
+		 * Default constructor, sets up panel attributes.
+		 */
 		public GameSplash() {
 			frame = new JFrame();
 			frame.getContentPane().setLayout(null);

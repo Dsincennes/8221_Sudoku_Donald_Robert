@@ -8,7 +8,7 @@ import javax.swing.JLabel;
  * 
  * File Name: SudokuGridLabel.java 
  * Assessment: Assignment 1.2
- * Student Name:  Donald Sincennes & Robert Jackson 
+ * Student Name:  Donald Sincennes and Robert Jackson 
  * Student Number: 041011305 & 040627795
  * Course: CST8221 - Java Application Programming
  * 
@@ -22,11 +22,14 @@ import javax.swing.JLabel;
  * Class Name: SudokuGridLabel
  * Purpose: To implement a customized version of JLabel, so we are able to keep track of attributes that pretain to its position and value. 
  * 
- * @author Donald Sincennes & Robert Jackson
+ * @author Donald Sincennes and Robert Jackson
  * @version 0.1
  */
 public class SudokuGridLabel extends JLabel {
 
+	/**
+	 * row and col of the current grid selection
+	 */
 	private int row, col;
 
 	/**
@@ -34,12 +37,11 @@ public class SudokuGridLabel extends JLabel {
 	 * Method Name: SudokuGridLabel
 	 * Method Purpose: The default constructor, this is simply to initialize the values.
 	 * 
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
 	 * 
 	 * @param row of type int, The row of which this label is on.
 	 * @param col of type int, The column of which this label is on.
-	 * @param value of type char, The value which this label contains. Will likely change to getText
 	 */
 	public SudokuGridLabel(int row, int col) {
 		super("", 0);
@@ -53,7 +55,7 @@ public class SudokuGridLabel extends JLabel {
 	 * Method name: getRow
 	 * Method Purpose: To get the attribute of the row.
 	 * 
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
 	 * 
 	 * @return int, the row to be returned.
@@ -66,7 +68,7 @@ public class SudokuGridLabel extends JLabel {
 	 * Method name: setRow
 	 * Method Purpose: To set the attribute of the row.
 	 * 
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
 	 * 
 	 * @param row of type int, The row to be set.
@@ -79,7 +81,7 @@ public class SudokuGridLabel extends JLabel {
 	 * Method name: getCol
 	 * Method Purpose: To get the attribute of col.
 	 * 
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
 	 * 
 	 * @return int, the column to be returned.
@@ -93,7 +95,7 @@ public class SudokuGridLabel extends JLabel {
 	 * Method name: setCol
 	 * Method Purpose: To set the attribute of the col integer.
 	 * 
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
      * 
 	 * @param col of type int, the column to be set.

@@ -24,7 +24,7 @@ import javax.swing.border.TitledBorder;
  * Course: CST8221 - Java Application Programming
  * 
  * @JavaVersion v13
- * @author Donald Sincennes & Robert Jackson
+ * @author Donald Sincennes and Robert Jackson
  * @version 0.1
  */
 
@@ -33,17 +33,35 @@ import javax.swing.border.TitledBorder;
  * Purpose: This is a panel that contains our selection of sudoku field options. It allows for selecting of a number, 
  * then afterwards you can select a position on the grid.
  * 
- * @author Donald Sincennes & Robert Jackson
+ * @author Donald Sincennes and Robert Jackson
  *
  */
 public class NumberInputPanel extends JPanel {
 
+	/**
+	 * Buttons for input
+	 */
 	private JToggleButton[] inputs;
+	/**
+	 * button group for each button to be added to
+	 */
 	private ButtonGroup bg;
+	/**
+	 * panel for buttons
+	 */
 	private JPanel pnlNumPanel;
+	/**
+	 * help with alignment
+	 */
 	private JPanel pnlAlign;
+	/**
+	 * inner panel for individual numbers
+	 */
 	private JPanel pnlNumbers;
 	
+	/**
+	 * to keep track of current selection
+	 */
 	static char currentSelection; // This will be changed to private after we move to an MVC model.
 
 	/**

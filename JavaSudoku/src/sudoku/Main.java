@@ -21,13 +21,16 @@ import javax.swing.SwingUtilities;
  * Class: Main.java
  * Purpose: To invoke a new runnable thread of our application.
  * 
- * @author Donald Sincennes & Robert Jackson
+ * @author Donald Sincennes and Robert Jackson
  * @version 0.1
  * 
  */
 public class Main {
 
-
+	/**
+	 * Default Constructor
+	 */
+	public Main() {	}
 	/**
 	 * 
 	 * Method name: main

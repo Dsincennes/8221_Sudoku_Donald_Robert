@@ -25,41 +25,52 @@ import javax.swing.SwingUtilities;
  * 
  * File Name: OptionPanel.java
  * Assessment: Assignment 1.2 
- * Student Name: Donald Sincennes & Robert Jackson 
+ * Student Name: Donald Sincennes and Robert Jackson 
  * Student Number: 041011305 & 040627795
  * Course: CST8221 -
  * Java Application Programming
  * 
  * @JavaVersion v13
- * @author Donald Sincennes & Robert Jackson
+ * @author Donald Sincennes and Robert Jackson
  * @version 0.1
  */
 
 /**
- * Class: NumberInputPanel.
+ * Class: Option Panel.
  * Purpose: This is a panel that contains our selection of sudoku field options. It allows for selecting of a number, 
  * then afterwards you can select a position on the grid.
  * 
- * @author Donald Sincennes & Robert Jackson
+ * @author Donald Sincennes and Robert Jackson
 	 * @version 0.1
- */
-/**
- * @author rfjax
- *
  */
 public class OptionPanel extends JPanel {
 
+	/**
+	 * Combo Box for game difficulty
+	 */
 	private JComboBox<String> diff;
+	/**
+	 * Label for Difficulty combo box
+	 */
 	private JLabel diffLabel;
+	/**
+	 * Scroll pane for text area
+	 */
 	private JScrollPane scroll;
+	/**
+	 * button for about/help
+	 */
 	private JButton jb;
 	
+	/**
+	 * JtextArea for logging
+	 */
 	private static JTextArea textArea; // Will be changed to purely private when we establish an MVC model.
 
 	/**
 	 * Method: OptionPanel default constructor.
 	 * Purpose: Default constructor for class Option Panel, this will set the attributes for the panel.
-	 * @author Donald Sincennes & Robert Jackson
+	 * @author Donald Sincennes and Robert Jackson
 	 * @version 0.1
 	 */
 	public OptionPanel() {
@@ -98,6 +109,9 @@ public class OptionPanel extends JPanel {
 
 	} // End of default Constructor.
 
+	/**
+	 * helper method for placement of all option components
+	 */
 	private void layoutComponents() {
 		setLayout(new GridBagLayout());
 
@@ -170,7 +184,7 @@ public class OptionPanel extends JPanel {
 	 * Purpose: To add to our text area in the option pane, to reflect an action being taken.
 	 * 
 	 * @param text of type String, What we wish to append to our text field.
-	 * @author Donald Sincennes & Robert Jackson
+	 * @author Donald Sincennes and Robert Jackson
 	 * @version 0.1
 	 */
 	public static void appendText(String text) {
@@ -188,17 +202,27 @@ public class OptionPanel extends JPanel {
 	 * Class Name: AboutPanel
 	 * Purpose: This is an inner class containing a frame and panel elements, this is an about frame that populates when its thread is called.
 	 * 
-	 * @author Donald Sincennes & Robert Jackson
+	 * @author Donald Sincennes and Robert Jackson
 	 * @version 0.1
 	 *
 	 */
 	public class AboutPanel {
 		
+		/**
+		 * Frame for about and help panel
+		 */
 		JFrame frame;
-		
+		/**
+		 * Label or Title for the about frame
+		 */
 		JLabel about = new JLabel("<HTML><U><B>How To Play</B></U></HTML>", SwingConstants.CENTER);
+		/**
+		 * Image for about panel
+		 */
 		JLabel image = new JLabel(new ImageIcon("sudoku_about.png"));
-		
+		/**
+		 * Close Button
+		 */
 		JButton close = new JButton("Close");
 
 
@@ -206,7 +230,7 @@ public class OptionPanel extends JPanel {
 		 * Method Name: AboutPanel.
 		 * Purpose: This is the default constructor for class AboutPanel, it initializes and sets the property of the frame.
 		 * 
-		 * @author Donald Sincennes & Robert Jackson
+		 * @author Donald Sincennes and Robert Jackson
 	 	 * @version 0.1
 		 */
 		public AboutPanel() {

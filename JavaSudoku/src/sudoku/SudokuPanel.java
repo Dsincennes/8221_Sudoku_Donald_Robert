@@ -20,14 +20,12 @@ import javax.swing.JPanel;
 /**
  * CET - CS Academic Level 4
  * 
- * 
  * File Name: SudokuPanel.java 
  * Assessment: Assignment 1.2
- * Student Name:  Donald Sincennes & Robert Jackson 
+ * Student Name:  Donald Sincennes and Robert Jackson 
  * Student Number: 041011305 & 040627795
  * Course: CST8221 - Java Application Programming
  * 
- * @JavaVersion v13
  * @author Donald Sincennes & Robert Jackson
  * @version 0.1
  * 
@@ -39,31 +37,30 @@ import javax.swing.JPanel;
  * Class Purpose: this class holds the rules for generating a sudoku puzzle, as well as checking for errors while inputing numbers 
  * in design mode.
  * 
- * 
- * @JavaVersion v13
- * @author Donald Sincennes & Robert Jackson
+ * @author Donald Sincennes and Robert Jackson
  * @version 0.1
- *
  *
  */
 public class SudokuPanel extends JPanel {
-	
+	/**
+	 * gridDim size for the gameboard array
+	 */
 	private int gridDim, gameBoard[][]; // 4x4(2x2), 9x9(3x3), 16x16(4x4)
+	/**
+	 * grid of Jlabels for sudoku puzzle
+	 */
 	private JLabel[][] grid;
 	
-	
-	
-
 	/**
 	 * 
 	 * Method Name: SudokuPanel
 	 * Method Purpose: The overloaded constructor for class SudokuPanel.
 	 * This sets up the grid based on the dimensions given, as well as which play mode you are presently in. 
 	 * 
-	 * @JavaVersion v13
-	 * @author Donald Sincennes & Robert Jackson
+	 * @author Donald Sincennes and Robert Jackson
 	 * @version 0.1
-	 * 
+	 * @param gridDim, for different sizes of sudoku 2x2 or 3x3
+	 * @param playMode, to differ from play or design
 	 */
 	public SudokuPanel(int gridDim, boolean playMode) {
 
@@ -124,9 +121,7 @@ public class SudokuPanel extends JPanel {
 	 * Method Name: validMove
 	 * Method Purpose: To validate that the action taken by the user is valid for data entry.
 	 * 
-	 * 
-	 * @JavaVersion v13
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
 	 * 
 	 * @param component of type Component, this is the custom label that we created for positional awareness.
@@ -151,11 +146,8 @@ public class SudokuPanel extends JPanel {
 	 * Method Name: createBoard
 	 * Method Purpose: createBoard Populates the game board.
 	 * 
-	 * 
-	 * @JavaVersion v13
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
-     * 
      * @param mode of type boolean, This is to indicate which mode we are presently in.
 	 * 
 	 */
@@ -176,15 +168,14 @@ public class SudokuPanel extends JPanel {
 	 * Method Purpose: Recursively generates a randomly created Sudoku game, based on the pivot
 	 * point or cluster range.
 	 * 
-     * @JavaVersion v13
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
      * 
-	 * @param Board of type int[][], Game to populate, it will call itself to subsequently add more
+	 * @param board of type int[][], Game to populate, it will call itself to subsequently add more
 	 *              items.
-	 * @param Index of type int, The current index being worked on, initially set to zero for the
+	 * @param index of type int, The current index being worked on, initially set to zero for the
 	 *              starting point.
-	 * @return int[][] Will return the completed version of the board.
+	 * @return board Will return the completed version of the board.
 	 */
 	public int[][] generateSolution(int[][] board, int index) {
 		
@@ -223,8 +214,7 @@ public class SudokuPanel extends JPanel {
 	 * into the present index, if so it will return the number, else it will return
 	 * -1. It slowly reduces the list from the prior method via call by reference.
 	 * 
-     * @JavaVersion v13
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
 	 * 
 	 * @param board   Board to check.
@@ -250,14 +240,13 @@ public class SudokuPanel extends JPanel {
 	 * Method Purpose: Returns true of false, dependent on if the current number is within the
 	 * cluster
 	 * 
-     * @JavaVersion v13
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
      * 
 	 * @param boardState Current state of the board to check.
 	 * @param x_axis     Current X position.
-	 * @param y_axsis    Current Y position.
-	 * @param number     Current number to look for.
+	 * @param y_axis    Current Y position.
+	 * @param current_num     Current number to look for.
 	 * @return boolean Returns a true of false statement if the block is presently able to accommodate the number.
 	 *
 	 * TODO Add modifier to pivot based on changed 4x4 etc.
@@ -307,8 +296,7 @@ public class SudokuPanel extends JPanel {
 	 * Method Purpose: Returns whether given number is candidate on x axis for given game.
 	 * 
 	 * 
-     * @JavaVersion v13
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
      * 
 	 * @param board of type int[][], The board to check.
@@ -332,8 +320,7 @@ public class SudokuPanel extends JPanel {
 	 * Method Purpose: Returns whether given number is candidate on y axis for given game.
 	 * 
 	 * 
-     * @JavaVersion v13
-     * @author Donald Sincennes & Robert Jackson
+     * @author Donald Sincennes and Robert Jackson
      * @version 0.1
      * 
 	 * @param board of type int[][], The board to check.
@@ -357,8 +344,7 @@ public class SudokuPanel extends JPanel {
 	 * Method Purpose: Saves our present game into a serialized version of it.
 	 * 
 	 * 
-	 * @JavaVersion v13
-	 * @author Donald Sincennes & Robert Jackson
+	 * @author Donald Sincennes and Robert Jackson
 	 * @version 0.1
 	 * 
 	 * @param file file to be saved
