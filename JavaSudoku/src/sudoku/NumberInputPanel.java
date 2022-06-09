@@ -12,6 +12,11 @@ import javax.swing.JToggleButton;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+/**
+ * This Class handles our Buttons that are to be selected for input into sudoku panel
+ * @author Donald Sincennes & Robert Jackson
+ *
+ */
 public class NumberInputPanel extends JPanel{
 
 	private JToggleButton[] inputs;
@@ -26,7 +31,7 @@ public class NumberInputPanel extends JPanel{
         add(pnlAlign, BorderLayout.NORTH);
         
 		setBackground(Color.LIGHT_GRAY);
-		currentSelection = ' ';
+		currentSelection = '1';
 		Dimension dim = getPreferredSize();
 		dim.height = 85;
 		
@@ -52,6 +57,8 @@ public class NumberInputPanel extends JPanel{
 			inputs[i].addActionListener(e ->{
 				currentSelection = e.getActionCommand().charAt(0);
 				OptionPanel.appendText("User Clicked: " + e.getActionCommand());
+				
+				
 			});;
 			bg.add(inputs[i]);
 			pnlNumbersNumbers.add(inputs[i]);

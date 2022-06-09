@@ -34,22 +34,18 @@ public class GameController extends JFrame{
 	public GameController() {
 		super("Donald Sincennes & Robert Jackson Sudoku"); // title
 		
-		gamePanel = new SudokuPanel(9, false);
 		options = new OptionPanel();
-		options2 = new NumberInputPanel(9);
 		fileChooser = new JFileChooser();
 		
 		setLayout(new BorderLayout());
-		add(gamePanel, BorderLayout.CENTER); // remove maybe?
 		add(options, BorderLayout.EAST);
-		add(options2, BorderLayout.SOUTH);
 		setJMenuBar(createMenuBar()); // setting top menu bar
 		setSize(800, 600); // sets default open size
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops process when user quits
 		setLocationRelativeTo(null);// Setting location to the center of screen
 		setVisible(true); // shows application
-//		splash = new GameSplash(); // shows splash
+		splash = new GameSplash(); // shows splash
 	}
 	
 	/**
@@ -123,22 +119,6 @@ public class GameController extends JFrame{
 			}
 		});
 		
-		clear.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to clear puzzle","confirm clear", JOptionPane.OK_CANCEL_OPTION);
-				if(action == JOptionPane.OK_OPTION) {
-//					newGame(4);
-//					revalidate();
-//					repaint();
-					//TODO add logic
-					OptionPanel.appendText("Cleared");
-				}
-				else
-					OptionPanel.appendText("Cancel Clear");
-			}
-		});
-		
 		//Save
 		saveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -181,15 +161,19 @@ public class GameController extends JFrame{
 		menuBar.add(fileMenu); // Adding File to the menu bar (makes it visible)
 		fileMenu.add(newGame); // Adding new game to file drop down
 		fileMenu.add(saveGame);
+		saveGame.setEnabled(false);
 		fileMenu.add(loadGame);
+		loadGame.setEnabled(false);
 		fileMenu.add(exitItem); // Adding Exit to file tab
 		fileMenu.add(clear);
 		newGame.add(design);
 		newGame.add(play);
 		play.add(playTwo);
 		play.add(playThree);
+		play.setEnabled(false);
 		design.add(designTwo);
 		design.add(designThree);
+		clear.setEnabled(false);
 		
 		//Mnemonics
 		fileMenu.setMnemonic(KeyEvent.VK_F); // File ( f )
@@ -207,11 +191,12 @@ public class GameController extends JFrame{
 	 * New game function. starts a new game in the application
 	 */
 	public void newGame(int dim, boolean play) {
-		if(gamePanel != null)
+		if(gamePanel != null) // Checks for panel
 			this.remove(gamePanel);  
         gamePanel = new SudokuPanel(dim, play);
 		
-        this.remove(options2);
+		if(options2 != null) // Checks for buttons
+			this.remove(options2);
         options2 = new NumberInputPanel(dim);
         
         add(gamePanel, BorderLayout.CENTER);
@@ -221,6 +206,11 @@ public class GameController extends JFrame{
         repaint();
 	}
 	
+	/**
+	 * This Inner class handles the splash screen at the beginning of the program. auto closes after 5 seconds
+	 * @author Donald Sincennes & Robert Jackson
+	 *
+	 */
 	public class GameSplash extends JPanel	{
 
 		JFrame frame;// Creating object of JFrame
@@ -258,9 +248,6 @@ public class GameController extends JFrame{
 				frame.setVisible(false); // close splash
 				return null;
 			}
-			
 		}
-
 	}
-
 }

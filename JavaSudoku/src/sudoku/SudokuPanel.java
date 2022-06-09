@@ -24,15 +24,15 @@ import javax.swing.JPanel;
 public class SudokuPanel extends JPanel {
 
 	private int[][] gameBoard;
-	public  int gridDim = 9; // 4x4(2x2), 9x9(3x3), 16x16(4x4)
-	private JLabel[][] grid = new SudokuGridLabel[gridDim][gridDim];
+	public int gridDim; // 4x4(2x2), 9x9(3x3), 16x16(4x4)
+	private JLabel[][] grid;
 
 	/**
 	 * Creates a grid
 	 */
 	public SudokuPanel(int gridDim, boolean play) {
 
-		
+		grid = new SudokuGridLabel[gridDim][gridDim];
 		this.gridDim = gridDim;
 		JPanel panel = new JPanel(new GridLayout(gridDim, gridDim, 1, 1));
 		panel.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -45,7 +45,7 @@ public class SudokuPanel extends JPanel {
 				grid[row][col].setOpaque(true);
 				grid[row][col].setBackground(Color.WHITE);
 				grid[row][col].addMouseListener(new MouseAdapter() {
-					public void mouseClicked(MouseEvent me) {
+					public void mousePressed(MouseEvent me) {
 						validMove(me.getComponent());
 					}
 					
@@ -79,17 +79,15 @@ public class SudokuPanel extends JPanel {
 	protected void validMove(Component component) {
 		SudokuGridLabel test = (SudokuGridLabel) component;
 		int selectedNum = NumberInputPanel.currentSelection - 48;
-		int y = ((SudokuGridLabel) component).getCol();
 		int x = ((SudokuGridLabel) component).getRow();
+		int y = ((SudokuGridLabel) component).getCol();
 		
-		if(isPossibleX(gameBoard, y, selectedNum) && isPossibleY(gameBoard, x, selectedNum)
+		if(isPossibleX(gameBoard, x, selectedNum) && isPossibleY(gameBoard, y, selectedNum)
 					&& isPossibleBlock(gameBoard, x, y, selectedNum)) {
 			gameBoard[x][y] = selectedNum;
+			OptionPanel.appendText("Set: " + selectedNum + "[" + x + "," + y + "]");
 			test.setText(String.valueOf(selectedNum));
-			System.out.println("TRUE");
 		}
-		else
-			System.out.println("False");
 		
 	}
 
@@ -223,7 +221,7 @@ public class SudokuPanel extends JPanel {
 		for (int col = vertCluster; col < vertCluster + (gridDim / 3); col++) {
             for (int row = horCluster; row < horCluster + (gridDim / 3); row++) {
 
-                if (boardState[col][row] == current_num) // TODO Convert this to take chars Though it should not be hard
+                if (boardState[row][col] == current_num)
                     return false;
             }
         }

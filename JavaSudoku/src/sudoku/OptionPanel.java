@@ -21,7 +21,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 
 public class OptionPanel extends JPanel {
-//
 
     private JComboBox<String> diff;
     private JLabel diffLabel;
@@ -100,7 +99,7 @@ public class OptionPanel extends JPanel {
         
         add(scroll, gc);
         
-        //////////////////// Fourth Row ////////////////////
+        //////////////////// Third Row ////////////////////
 
         gc.gridy++;
 
@@ -112,7 +111,7 @@ public class OptionPanel extends JPanel {
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(jb, gc);
 
-		//Load
+		// Listener for About Button
 		jb.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				helpPanel = new AboutPanel();
@@ -127,11 +126,6 @@ public class OptionPanel extends JPanel {
     }
     
 	public class AboutPanel extends JPanel	{
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1791487245110440767L;
 		JFrame frame;// Creating object of JFrame
 		JLabel image = new JLabel(new ImageIcon("sudoku_about.png")); // Loading image
 		JButton close = new JButton("Close");
@@ -162,30 +156,6 @@ public class OptionPanel extends JPanel {
 				}
 			});
 		}
-
-		/**
-		 * Class handles splash screen loading for 5 seconds only
-		 * @author Donald Sincennes & Robert Jackson
-		 *
-		 */
-		public class ResourceLoader extends SwingWorker<Object, Object> {
-
-			/**
-			 * Overridden method to handle showing splash screen for 5 seconds then hiding it.s
-			 */
-			@Override
-			protected Object doInBackground() throws Exception {
-				Thread.sleep(1000);
-				image.setVisible(false);
-				
-				
-				Thread.sleep(5000); // wait 5 seconds
-				frame.setVisible(false); // close splash
-				return null;
-			}
-			
-		}
-
 	}
 }
 
