@@ -1,4 +1,5 @@
 package sudoku;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -17,41 +18,79 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * Class holds the rules for generating a sudoku puzzle
+ * CET - CS Academic Level 4
+ * 
+ * 
+ * File Name: SudokuPanel.java 
+ * Assessment: Assignment 1.2
+ * Student Name:  Donald Sincennes & Robert Jackson 
+ * Student Number: 041011305 & 040627795
+ * Course: CST8221 - Java Application Programming
+ * 
+ * @JavaVersion v13
  * @author Donald Sincennes & Robert Jackson
+ * @version 0.1
+ * 
+ */
+
+/**
+ * 
+ * Class Name: SudokuPanel
+ * Class Purpose: this class holds the rules for generating a sudoku puzzle, as well as checking for errors while inputing numbers 
+ * in design mode.
+ * 
+ * 
+ * @JavaVersion v13
+ * @author Donald Sincennes & Robert Jackson
+ * @version 0.1
+ *
  *
  */
 public class SudokuPanel extends JPanel {
-
-	private int[][] gameBoard;
-	public int gridDim; // 4x4(2x2), 9x9(3x3), 16x16(4x4)
+	
+	private int gridDim, gameBoard[][]; // 4x4(2x2), 9x9(3x3), 16x16(4x4)
 	private JLabel[][] grid;
+	
+	
+	
 
 	/**
-	 * Creates a grid
+	 * 
+	 * Method Name: SudokuPanel
+	 * Method Purpose: The overloaded constructor for class SudokuPanel.
+	 * This sets up the grid based on the dimensions given, as well as which play mode you are presently in. 
+	 * 
+	 * @JavaVersion v13
+	 * @author Donald Sincennes & Robert Jackson
+	 * @version 0.1
+	 * 
 	 */
-	public SudokuPanel(int gridDim, boolean play) {
+	public SudokuPanel(int gridDim, boolean playMode) {
 
 		grid = new SudokuGridLabel[gridDim][gridDim];
 		this.gridDim = gridDim;
-		JPanel panel = new JPanel(new GridLayout(gridDim, gridDim, 1, 1));
-		panel.setBorder(BorderFactory.createRaisedBevelBorder());
-		panel.setBackground(Color.BLACK);
 		
+		JPanel boardPanel = new JPanel(new GridLayout(gridDim, gridDim, 1, 1));
+		
+		boardPanel.setBorder(BorderFactory.createRaisedBevelBorder());
+		boardPanel.setBackground(Color.BLACK);
+
 		for (int row = 0; row < gridDim; row++) {
 			for (int col = 0; col < gridDim; col++) {
-				grid[row][col] = new SudokuGridLabel("", 0, row, col, '0');
+				grid[row][col] = new SudokuGridLabel(row, col);
 				grid[row][col].setFont(new Font(Font.SANS_SERIF, Font.BOLD, 26));
 				grid[row][col].setOpaque(true);
 				grid[row][col].setBackground(Color.WHITE);
+				
 				grid[row][col].addMouseListener(new MouseAdapter() {
 					public void mousePressed(MouseEvent me) {
 						validMove(me.getComponent());
 					}
-					
+
 				});
-				panel.add(grid[row][col]);
 				
+				boardPanel.add(grid[row][col]);
+
 				switch (gridDim) {
 				case 4:
 					grid[row][col].setBackground(
@@ -62,70 +101,98 @@ public class SudokuPanel extends JPanel {
 							|| (row < 6 && row > 2 && col > 2 && col < 6) || (row > 5 && col > 5)
 							|| (row > 5 && col < 3)) ? Color.WHITE : Color.GRAY);
 					break;
-				case 16:			
+				case 16:
 					grid[row][col].setBackground(((row <= 3 && col <= 3) || (row <= 3 && col > 7 && col < 12)
 							|| (row > 3 && row < 8 && col >= 4 && col <= 7) || (row > 3 && row < 8 && col >= 12)
-							|| (row > 7 && row < 12  && col <= 3) || (row > 7 && row < 12 && col > 7 && col < 12)
-							|| (row > 11 && col >= 4 && col <= 7 ) ||  (row > 11 && col > 7 && col >= 12)) ? Color.WHITE : Color.GRAY);
+							|| (row > 7 && row < 12 && col <= 3) || (row > 7 && row < 12 && col > 7 && col < 12)
+							|| (row > 11 && col >= 4 && col <= 7) || (row > 11 && col > 7 && col >= 12)) ? Color.WHITE
+									: Color.GRAY);
 					break;
 				}
 			}
 		}
-		createBoard(play);
-        setLayout(new BorderLayout());
-        add(panel, BorderLayout.CENTER);
-	}
+		
+		createBoard(playMode);
+		
+		setLayout(new BorderLayout());
+		
+		add(boardPanel, BorderLayout.CENTER);
+	} // End of constructor SudokuPanel.
 
-	protected void validMove(Component component) {
+	/**
+	 * 
+	 * Method Name: validMove
+	 * Method Purpose: To validate that the action taken by the user is valid for data entry.
+	 * 
+	 * 
+	 * @JavaVersion v13
+     * @author Donald Sincennes & Robert Jackson
+     * @version 0.1
+	 * 
+	 * @param component of type Component, this is the custom label that we created for positional awareness.
+	 */
+	private void validMove(Component component) {
 		SudokuGridLabel test = (SudokuGridLabel) component;
 		int selectedNum = NumberInputPanel.currentSelection - 48;
 		int x = ((SudokuGridLabel) component).getRow();
 		int y = ((SudokuGridLabel) component).getCol();
-		
-		if(isPossibleX(gameBoard, x, selectedNum) && isPossibleY(gameBoard, y, selectedNum)
-					&& isPossibleBlock(gameBoard, x, y, selectedNum)) {
+
+		if (isPossibleX(gameBoard, x, selectedNum) && isPossibleY(gameBoard, y, selectedNum)
+				&& isPossibleBlock(gameBoard, x, y, selectedNum)) {
 			gameBoard[x][y] = selectedNum;
 			OptionPanel.appendText("Set: " + selectedNum + "[" + x + "," + y + "]");
 			test.setText(String.valueOf(selectedNum));
 		}
-		
-	}
+
+	} // End of method validMove.
 
 	/**
-	 * Method: createBoard Populates the game board.
+	 * 
+	 * Method Name: createBoard
+	 * Method Purpose: createBoard Populates the game board.
+	 * 
+	 * 
+	 * @JavaVersion v13
+     * @author Donald Sincennes & Robert Jackson
+     * @version 0.1
+     * 
+     * @param mode of type boolean, This is to indicate which mode we are presently in.
+	 * 
 	 */
-	public void createBoard(boolean play) {
-		if (!play) {
+	public void createBoard(boolean mode) {
+		if (!mode)
 			gameBoard = new int[gridDim][gridDim];
-		} else {
+		else {
 			gameBoard = generateSolution(new int[gridDim][gridDim], 0);
 
-			for (int col = 0; col < gridDim; col++) {
-				for (int row = 0; row < gridDim; row++) {
+			for (int col = 0; col < gridDim; col++)
+				for (int row = 0; row < gridDim; row++) 
 					grid[row][col].setText(String.valueOf((char) (gameBoard[row][col] + 48)));
-				}
-			}
 		}
-	}
+	} // End of method CreateBoard.
 
 	/**
-	 * Method: generateSolution
-	 *
-	 * Recursively generates a randomly created Sudoku game, based on the pivot
+	 * Method Name: generateSolution
+	 * Method Purpose: Recursively generates a randomly created Sudoku game, based on the pivot
 	 * point or cluster range.
-	 *
-	 * @param Board Game to populate, it will call itself to subsequently add more
+	 * 
+     * @JavaVersion v13
+     * @author Donald Sincennes & Robert Jackson
+     * @version 0.1
+     * 
+	 * @param Board of type int[][], Game to populate, it will call itself to subsequently add more
 	 *              items.
-	 * @param Index The current index being worked on, initially set to zero for the
+	 * @param Index of type int, The current index being worked on, initially set to zero for the
 	 *              starting point.
 	 * @return int[][] Will return the completed version of the board.
 	 */
 	public int[][] generateSolution(int[][] board, int index) {
+		
 		if (index > (Math.pow(gridDim, 2) - 1)) // Returns the game when it is populated
 			return board;
 
-		int x = index % gridDim; // Horizontal Axis
-		int y = index / gridDim; // Vertical Axis
+		int x = index % gridDim; 
+		int y = index / gridDim; 
 
 		List<Integer> numbers = new ArrayList<Integer>();
 
@@ -134,8 +201,8 @@ public class SudokuPanel extends JPanel {
 
 		Collections.shuffle(numbers);
 
-		while (numbers.size() > 0) { // While numbers isn't zero
-			int number = getNextNumb(board, x, y, numbers); // Generate next possible number at this place.
+		while (numbers.size() > 0) { 
+			int number = getNextNumb(board, x, y, numbers);
 			if (number == -1)
 				return null;
 
@@ -148,12 +215,17 @@ public class SudokuPanel extends JPanel {
 		}
 
 		return null;
-	}
+	} // End of generateSolution.
 
 	/**
-	 * Method: getNextNum Checks to see if it is a valid number in which to place
+	 * Method Name: getNextNumb
+	 * Method Purpose: getNextNum Checks to see if it is a valid number in which to place
 	 * into the present index, if so it will return the number, else it will return
 	 * -1. It slowly reduces the list from the prior method via call by reference.
+	 * 
+     * @JavaVersion v13
+     * @author Donald Sincennes & Robert Jackson
+     * @version 0.1
 	 * 
 	 * @param board   Board to check.
 	 * @param x_axis  X position in game.
@@ -170,35 +242,42 @@ public class SudokuPanel extends JPanel {
 				return number;
 		}
 		return -1;
-	}
+	} // End of method getNextNumb.
 
 	/**
-	 * Returns true of false, dependent on if the current number is within the
+	 * 
+	 * Method Name: isPossibleBlock
+	 * Method Purpose: Returns true of false, dependent on if the current number is within the
 	 * cluster
-	 *
+	 * 
+     * @JavaVersion v13
+     * @author Donald Sincennes & Robert Jackson
+     * @version 0.1
+     * 
 	 * @param boardState Current state of the board to check.
 	 * @param x_axis     Current X position.
 	 * @param y_axsis    Current Y position.
 	 * @param number     Current number to look for.
-	 * @return boolean Returns a true of false statement if the block is presently
-	 *         able to accommodate the number.
+	 * @return boolean Returns a true of false statement if the block is presently able to accommodate the number.
 	 *
-	 *         TODO Add modifier to pivot based on changed 3x3 6x6 etc.
+	 * TODO Add modifier to pivot based on changed 4x4 etc.
 	 */
 	public boolean isPossibleBlock(int[][] boardState, int x_axis, int y_axis, int current_num) {
 
-		// If the x index is < 3 then it is in the first cluster.
-		// If it is < 6 then it is in the second cluster.
-		// Else it is in the third cluster.
 		int horCluster = 0;
 		int vertCluster = 0;
 
 		// This will need to be adjusted for each additional jump in 4x4 9x9 16x16
-		// 25x25, because there will need to be additional &&'s to adjust for
-		// 1.5 being 2/3's of the cluster IE 6/9
-		// 3 being a third of the cluster 3/9
 		switch (gridDim) {
-		case 4:
+		case 4:				
+					horCluster = (x_axis >= 2) ? 2:0;
+					vertCluster = (y_axis >= 2) ? 2:0;
+				
+				for (int col = vertCluster; col < vertCluster  + (gridDim / 2); col++)
+					for (int row = horCluster; row < horCluster  + (gridDim / 2); row++)
+						if (boardState[row][col] == current_num)
+							return false;
+			break;
 		case 9:
 			if (x_axis < (gridDim / 1.5) && x_axis >= (gridDim / 3))
 				horCluster = (gridDim / 3);
@@ -209,32 +288,32 @@ public class SudokuPanel extends JPanel {
 				vertCluster = (gridDim / 3);
 			else if (y_axis >= (gridDim / 1.5))
 				vertCluster = (int) (gridDim / 1.5);
-			break;
-		case 16:
 			
-			horCluster = (x_axis < 3) ? 0: (x_axis > 3 && x_axis < 8) ? 4: (x_axis > 8 && x_axis <  12)? 8: 12;    
-			vertCluster = (y_axis < 3) ? 0: (y_axis > 3 && y_axis < 8) ? 4: (y_axis > 8 && y_axis <  12)? 8: 12;   	
+			
+			for (int col = vertCluster; col < vertCluster + (gridDim / 3); col++)
+				for (int row = horCluster; row < horCluster + (gridDim / 3); row++)
+					if (boardState[row][col] == current_num)
+						return false;
 			break;
 
 		}
 
-		for (int col = vertCluster; col < vertCluster + (gridDim / 3); col++) {
-            for (int row = horCluster; row < horCluster + (gridDim / 3); row++) {
-
-                if (boardState[row][col] == current_num)
-                    return false;
-            }
-        }
-
 		return true;
-	}
+	} // End of method isPossibleBlock.
 
 	/**
-	 * Returns whether given number is candidate on x axis for given game.
-	 *
-	 * @param board      Board to check.
-	 * @param x_axis     Position of x axis to check.
-	 * @param currentNum Present number to compare
+	 * 
+	 * Method Name: isPossibleX
+	 * Method Purpose: Returns whether given number is candidate on x axis for given game.
+	 * 
+	 * 
+     * @JavaVersion v13
+     * @author Donald Sincennes & Robert Jackson
+     * @version 0.1
+     * 
+	 * @param board of type int[][], The board to check.
+	 * @param x_axis of type int, Position of x axis to check.
+	 * @param currentNum of type int, Present number to compare
 	 * @return boolean Returns true if the number will fit within the limits of the
 	 *         row.
 	 */
@@ -245,17 +324,23 @@ public class SudokuPanel extends JPanel {
 				return false;
 
 		return true;
-	}
+	} // End of method isPossibleX.
 
 	/**
-	 * Returns true of false, given if a number is already present in a prior
-	 * column.
-	 *
-	 * @param board      Board to check.
-	 * @param y_axis     Position of y axis to check.
-	 * @param currentNum Present number to compare
+	 * 
+	 * Method Name: isPossibleY
+	 * Method Purpose: Returns whether given number is candidate on y axis for given game.
+	 * 
+	 * 
+     * @JavaVersion v13
+     * @author Donald Sincennes & Robert Jackson
+     * @version 0.1
+     * 
+	 * @param board of type int[][], The board to check.
+	 * @param y_axis of type int, Position of y axis to check.
+	 * @param currentNum of type int, Present number to compare
 	 * @return boolean Returns true if the number will fit within the limits of the
-	 *         column.
+	 *         row.
 	 */
 	public boolean isPossibleY(int[][] board, int y_axis, int currentNum) {
 
@@ -264,14 +349,22 @@ public class SudokuPanel extends JPanel {
 				return false;
 
 		return true;
-	}
-	
+	} // End of method isPossibleY.
+
 	/**
-	 * SaveFile
+	 * 
+	 * Method Name: saveToFile
+	 * Method Purpose: Saves our present game into a serialized version of it.
+	 * 
+	 * 
+	 * @JavaVersion v13
+	 * @author Donald Sincennes & Robert Jackson
+	 * @version 0.1
+	 * 
 	 * @param file file to be saved
 	 * @throws IOException incase cannot save
 	 */
 	public void saveToFile(File file) throws IOException {
 
-	}
-}
+	} // End of method saveToFile.
+} // End of class SudokuPanel.

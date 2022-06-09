@@ -1,7 +1,7 @@
 package sudoku;
+
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
@@ -12,140 +12,183 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingWorker;
+
+import javax.swing.SwingUtilities;
 
 /**
- * Class contains main frame, can control most of the game features through the menu bar
+ * CET - CS Academic Level 4
+ * 
+ * 
+ * File Name: GameController.java 
+ * Assessment: Assignment 1.2
+ * Student Name:  Donald Sincennes & Robert Jackson 
+ * Student Number: 041011305 & 040627795
+ * Course: CST8221 - Java Application Programming
+ * 
+ * @JavaVersion v13
  * @author Donald Sincennes & Robert Jackson
+ * @version 0.1
+ */
+
+/**
+ * 
+ * Class GameController
+ * Purpose: To contain the main frame, and acts as a controller though the majority of the game.
+ * 
+ * @author Donald Sincennes & Robert Jackson
+ * @version 0.1
  *
  */
-public class GameController extends JFrame{
+public class GameController extends JFrame {
 
 	private SudokuPanel gamePanel;
 	private OptionPanel options;
 	private JFileChooser fileChooser;
-	private GameSplash splash;
-	private NumberInputPanel options2;
-	
+	private NumberInputPanel inputChoices;
+
 	/**
-	 * Constructor opens the main frame, sets size layout and main functions
+	 * Default constructor: Initializes our variables, as well as sets the attributes of our JFrame.
 	 */
 	public GameController() {
-		super("Donald Sincennes & Robert Jackson Sudoku"); // title
 		
+		super("Donald Sincennes & Robert Jackson Sudoku"); // title
+
 		options = new OptionPanel();
 		fileChooser = new JFileChooser();
-		
+
 		setLayout(new BorderLayout());
+		
 		add(options, BorderLayout.EAST);
-		setJMenuBar(createMenuBar()); // setting top menu bar
-		setSize(800, 600); // sets default open size
+		
+		setJMenuBar(createMenuBar()); // Sets Menu bar.
+		setSize(800, 600); // Sets window size.
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // stops process when user quits
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Enables the close operation on the frame.
 		setLocationRelativeTo(null);// Setting location to the center of screen
 		setVisible(true); // shows application
-		splash = new GameSplash(); // shows splash
+		
+		SwingUtilities.invokeLater(() -> { new GameSplash(); }); // Invokes splash screen.
+
 	}
-	
+
 	/**
-	 * Creates application menu bar
-	 * @return menu bar is returned
+	 * Method name: createMenuBar.
+	 * Purpose: To create a menu bar for the frame to use.
+	 * 
+	 * @author Donald Sincennes & Robert Jackson
+	 * @return JMenuBar, Returns the created menu bar.
+	 * @version 0.1
 	 */
 	private JMenuBar createMenuBar() {
+		
 		JMenuBar menuBar = new JMenuBar();
+		
 		JMenu fileMenu = new JMenu("File");
 		JMenu newGame = new JMenu("New Game");
-		JMenu design = new JMenu("Design");
-		JMenu play = new JMenu("Play");
-		JMenuItem designTwo = new JMenuItem("Design 2x2");
-		JMenuItem designThree = new JMenuItem("Design 3x3");
-		JMenuItem playTwo = new JMenuItem("Play 2x2");
-		JMenuItem playThree = new JMenuItem("Play 3x3");
 		JMenuItem saveGame = new JMenuItem("Save Game");
 		JMenuItem loadGame = new JMenuItem("Load Game");
 		JMenuItem exitItem = new JMenuItem("Exit");
 		JMenuItem clear = new JMenuItem("Clear");
 		
-		// Play .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
-		playTwo.addActionListener(e -> {
-				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Play a new 2x2 Game?",
-						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
-				if(action == JOptionPane.OK_OPTION) { // user confirms new game
-					newGame(4, true);
-					OptionPanel.appendText("Play 2x2");
-				}
-				else
-					OptionPanel.appendText("Cancel Play 2x2");
-		});
+		JMenu design = new JMenu("Design");
+		JMenuItem designTwo = new JMenuItem("Design 2x2");
+		JMenuItem designThree = new JMenuItem("Design 3x3");
 		
-		// Play .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
+		JMenu play = new JMenu("Play");
+		JMenuItem playTwo = new JMenuItem("Play 2x2");
+		JMenuItem playThree = new JMenuItem("Play 3x3");
+		
+
+// * =============================================================================================================
+// * Series of file menu systems action listeners being implemented.
+// * =============================================================================================================
+
+
+		/*
+		 * Gives menu prompt for action, if OK is pressed it creates a new game with the selected dimension.
+		 */
+		playTwo.addActionListener(e -> {
+			int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Play a new 2x2 Game?",
+					"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
+			
+			if (action == JOptionPane.OK_OPTION) { // user confirms new game
+				newGame(4, true);
+				OptionPanel.appendText("Play 2x2");
+			} else
+				OptionPanel.appendText("Cancel Play 2x2");
+		});
+
+		/*
+		 * Gives menu prompt for action, if OK is pressed it creates a new game with the selected dimension.
+		 */
 		playThree.addActionListener(e -> {
 			int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Play a new 3x3 game?",
 					"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
-			if(action == JOptionPane.OK_OPTION) { // user confirms new game
+			if (action == JOptionPane.OK_OPTION) { // user confirms new game
 				newGame(9, true);
 				OptionPanel.appendText("Play 3x3");
-			}
-			else
+			} else
 				OptionPanel.appendText("Cancel Play 3x3");
 		});
-		
-		// Design .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
-		designTwo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+
+		/*
+		 * Gives menu prompt for action, if OK is pressed it creates a new design game with the selected dimension.
+		 */
+		designTwo.addActionListener(e -> {
+			
 				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Design a new 2x2 game?",
 						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
-				if(action == JOptionPane.OK_OPTION) { // user confirms new game
+				
+				if (action == JOptionPane.OK_OPTION) { // user confirms new game
 					newGame(4, false);
 					OptionPanel.appendText("Design 2x2");
-				}
-				else
+				} else
 					OptionPanel.appendText("Cancel Design 2x2");
-			}
 		});
-		
-		// Design .... Beginning implementation of new game. Will eventually clear and start new fresh puzzle
-		designThree.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+
+		/*
+		 * Gives menu prompt for action, if OK is pressed it creates a new design game with the selected dimension.
+		 */
+		designThree.addActionListener(e -> {
+			
 				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you want to Design a new 3x3 game?",
 						"Confirm New Game", JOptionPane.OK_CANCEL_OPTION); // User pressed Cancel, nothing happens
-				if(action == JOptionPane.OK_OPTION) { // user confirms new game
+				
+				if (action == JOptionPane.OK_OPTION) { // user confirms new game
 					newGame(9, false);
 					OptionPanel.appendText("Design 3x3");
-				}
-				else
+				} else
 					OptionPanel.appendText("Cancel design 3x3");
-			}
+			
 		});
-		
-		//Save
-		saveGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+
+		/*
+		 * Gives menu prompt for action, if OK is pressed it saves the presently active game/design
+		 */
+		saveGame.addActionListener(e -> {
+			
 				if (fileChooser.showSaveDialog(GameController.this) == JFileChooser.APPROVE_OPTION) {
 					OptionPanel.appendText("Saved");
-				}
-				else {
+				} else {
 					OptionPanel.appendText("Cancel Save");
 				}
-			}
 		});
-		
-		//Load
-		loadGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+
+		/*
+		 * Gives menu prompt for action, if OK is pressed it loads a file loader, to select a game they wish to load.
+		 */
+		loadGame.addActionListener(e -> {
 				if (fileChooser.showOpenDialog(GameController.this) == JFileChooser.APPROVE_OPTION) {
 					OptionPanel.appendText("Load");
-				}
-				else {
+				} else {
 					OptionPanel.appendText("Cancel Load");
 				}
-			}
 		});
-		
-		// Exit... This function adds a listener that reacts to mouse click. creates a confirm dialog to confirm exit if pressed
-		exitItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+
+		/*
+		 * Gives menu prompt for action, if OK is pressed the game is closed.
+		 */
+		exitItem.addActionListener(e -> {
 				int action = JOptionPane.showConfirmDialog(GameController.this, "Do you really want to exit?",
 						"Confirm Exit", JOptionPane.OK_CANCEL_OPTION);
 
@@ -153,101 +196,121 @@ public class GameController extends JFrame{
 					System.exit(0);
 				else
 					OptionPanel.appendText("Cancel Exit");
-			}
 		});
-		
 
+// * =============================================================================================================
+// * Adds menu items to their respective drop down menu.
+// * =============================================================================================================
+		menuBar.add(fileMenu); 
 		
-		menuBar.add(fileMenu); // Adding File to the menu bar (makes it visible)
-		fileMenu.add(newGame); // Adding new game to file drop down
+		fileMenu.add(newGame);
 		fileMenu.add(saveGame);
-		saveGame.setEnabled(false);
 		fileMenu.add(loadGame);
-		loadGame.setEnabled(false);
-		fileMenu.add(exitItem); // Adding Exit to file tab
-		fileMenu.add(clear);
+		fileMenu.add(exitItem);
+		fileMenu.add(clear);	
+
 		newGame.add(design);
+		design.add(designTwo);
+		design.add(designThree);
+		
 		newGame.add(play);
 		play.add(playTwo);
 		play.add(playThree);
-		play.setEnabled(false);
-		design.add(designTwo);
-		design.add(designThree);
-		clear.setEnabled(false);
+
 		
-		//Mnemonics
+		
+// * =============================================================================================================
+// * Disables un-implemented menu items.
+// * =============================================================================================================
+		
+		saveGame.setEnabled(false);
+		loadGame.setEnabled(false);
+		play.setEnabled(false);
+		clear.setEnabled(false);
+
+		
+// * =============================================================================================================
+// * Sets manual nemonic's for keyboard shortcuts.
+// * =============================================================================================================
+
 		fileMenu.setMnemonic(KeyEvent.VK_F); // File ( f )
 		exitItem.setMnemonic(KeyEvent.VK_X); // Exit ( x )
 		newGame.setMnemonic(KeyEvent.VK_N); // New Game ( n )
 		saveGame.setMnemonic(KeyEvent.VK_S);
 		loadGame.setMnemonic(KeyEvent.VK_L);
-		
-		//Accelerators
-		
+
+
 		return menuBar;
-	}
-	
+	} // End of method createMenuBar.
+
+
 	/**
-	 * New game function. starts a new game in the application
-	 */
-	public void newGame(int dim, boolean play) {
-		if(gamePanel != null) // Checks for panel
-			this.remove(gamePanel);  
-        gamePanel = new SudokuPanel(dim, play);
-		
-		if(options2 != null) // Checks for buttons
-			this.remove(options2);
-        options2 = new NumberInputPanel(dim);
-        
-        add(gamePanel, BorderLayout.CENTER);
-        add(options2, BorderLayout.SOUTH);
-        
-        revalidate();
-        repaint();
-	}
-	
-	/**
-	 * This Inner class handles the splash screen at the beginning of the program. auto closes after 5 seconds
+	 * Method: newGame
+	 * Purpose: To start a new game within the Sudoku game pane.
+	 * @param dim of type int, used to set the dimensions of the grid being made.
+	 * @param play of type boolean, used to set the flag for type of game state being made.
 	 * @author Donald Sincennes & Robert Jackson
+	 * @version 0.1
+	 */
+	private void newGame(int dim, boolean play) {
+		if (gamePanel != null)
+			this.remove(gamePanel);
+		
+		if (inputChoices != null) 
+			this.remove(inputChoices);
+		
+		gamePanel = new SudokuPanel(dim, play);
+
+		inputChoices = new NumberInputPanel(dim);
+
+		
+		add(gamePanel, BorderLayout.CENTER);
+		add(inputChoices, BorderLayout.SOUTH);
+
+		// Refresh pane.
+		revalidate();
+		repaint();
+	} // End of method newGame.
+	
+	
+	/**
+	 * Class: GameSplash
+	 * Purpose: An inner class that launches a new frame with a panel at the beginning of the game, duration five secounds.
+	 * 
+	 * @author Donald Sincennes & Robert Jackson
+	 * @version 0.1
 	 *
 	 */
-	public class GameSplash extends JPanel	{
+	private class GameSplash{
 
-		JFrame frame;// Creating object of JFrame
-		JLabel image = new JLabel(new ImageIcon("sudoku.png")); // Loading image
+		JFrame frame;
+		JLabel image = new JLabel(new ImageIcon("sudoku.png"));
 
-		/**
-		 * Constructor that loads entire splash frame
-		 */
-		public GameSplash()
-		{
-			frame = new JFrame(); // Create jframe object
-			frame.getContentPane().setLayout(null);// set layout to null
-			frame.setUndecorated(true);// no title bar
-			frame.setSize(800, 600);// Frame size
-			frame.setLocationRelativeTo(null);// frame location center
-			frame.add(image); // add image to frame
-			image.setSize(800,600); // image size
-			frame.setVisible(true);// show frame		
-			new ResourceLoader().execute(); // new object, needed to thread sleep, ( splash screen 5 second )
-		}
-
-		/**
-		 * Class handles splash screen loading for 5 seconds only
-		 * @author Donald Sincennes & Robert Jackson
-		 *
-		 */
-		public class ResourceLoader extends SwingWorker<Object, Object> {
-
-			/**
-			 * Overridden method to handle showing splash screen for 5 seconds then hiding it.s
-			 */
-			@Override
-			protected Object doInBackground() throws Exception {
-				Thread.sleep(5000); // wait 5 seconds
-				frame.setVisible(false); // close splash
-				return null;
-			}
-		}
-	}
-}
+		// Default constructor, sets up panel attributes.
+		public GameSplash() {
+			frame = new JFrame();
+			frame.getContentPane().setLayout(null);
+			frame.setUndecorated(true);
+			
+			frame.setSize(800, 600);
+			frame.setLocationRelativeTo(null);
+			frame.add(image); 
+			frame.setVisible(true);
+			
+			image.setSize(800, 600);
+			
+			
+			SwingUtilities.invokeLater(() -> {
+				try {
+					Thread.sleep(5000);
+					frame.setVisible(false);
+				} catch (InterruptedException e) {
+					
+					System.err.println(e);
+					
+				}
+			});
+			
+		} // End of constructor.
+	} // End of class GameSplash.
+} // End of class GameController
